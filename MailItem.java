@@ -15,6 +15,8 @@ public class MailItem
     private String message;
     // el asunto del message
     private String subject;
+    // mensage encriptado
+    private boolean encriptado;
 
     /**
      * Create a mail item from sender to the given recipient,
@@ -23,12 +25,14 @@ public class MailItem
      * @param to The intended recipient of this item.
      * @param message The text of the message to be sent.
      */
-    public MailItem(String from, String to, String subject, String message )
+    public MailItem(boolean encrip, String from, String to, String subject, String message )
     {
+        this.encriptado = encrip;
         this.from = from;
         this.to = to;
         this.subject = subject;
-        this.message = message;        
+        this.message = message; 
+
     }
 
     /**
@@ -59,10 +63,28 @@ public class MailItem
      * Print this mail message to the text terminal.
      */
     public void print()
-    {
-        System.out.println("From: " + from);
-        System.out.println("To: " + to);
-        System.out.println("subject: " + subject);
-        System.out.println("Message: " + message);
+    {  
+        if(encriptado = false){
+            System.out.println("From: " + from);
+            System.out.println("To: " + to);
+            System.out.println("subject: " + subject);
+            System.out.println("Message: " + message);
+        }
+        if(encriptado = true){
+            System.out.println("From: " + from);
+            System.out.println("To: " + to);
+            System.out.println("subject: " + subject);
+            message = message.replace("$\\","a");
+            message = message.replace("\\$","A");
+            message = message.replace("%\\","e");
+            message = message.replace("\\%","E");
+            message =message.replace("*\\","i");
+            message = message.replace("\\*","I");
+            message = message.replace("#\\","o");
+            message = message.replace("\\#","O");
+            message = message.replace("@\\","u");
+            message = message.replace("\\@","U");
+            System.out.println("Message: " + message);
+        }
     }
 }

@@ -41,6 +41,7 @@ public class MailClient
         }
         else {
             item.print();
+
         }
     }
 
@@ -52,7 +53,25 @@ public class MailClient
      */
     public void sendMailItem(String to, String subject, String message)
     {
-        MailItem item = new MailItem(user, to, subject, message);
+        MailItem item = new MailItem(false,user, to, subject, message);
+        server.post(item);
+    }
+
+    public void sendMailItemEncriptado(String to, String subject, String message)
+    {                
+        message = message.replace("a","$\\");
+        message = message.replace("A","\\");
+        message = message.replace("e","%\\");
+        message = message.replace("E","\\%");
+        message = message.replace("i","*\\");
+        message = message.replace("I","\\*");
+        message = message.replace("o","#\\");
+        message = message.replace("O","\\#");
+        message = message.replace("u","@\\");
+        message = message.replace("U","\\@");
+        System.out.println("Message: " + message);          
+
+        MailItem item = new MailItem(true,user, to, subject, message); 
         server.post(item);
     }
 }
